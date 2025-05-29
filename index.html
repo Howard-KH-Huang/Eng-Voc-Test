@@ -197,25 +197,30 @@
         }
 
         const feedback = document.getElementById(`feedback_${index}`);
-        const correctAnswer = index < 20 ? item.word : item.zh;
+        const correctAnswer = index < 20 ? item.word : (index >= 30 ? item.word : item.zh);
+        
 
         if (!userAnswer) {
           unansweredCount++;
-          feedback.textContent = `? 未作答，正確答案為：${correctAnswer}`;
+          feedback.textContent = index >= 30
+            ? `? 未作答，正確答案為：${item.zh}（${item.word}）`
+            : `? 未作答，正確答案為：${item.word}（${item.zh}）`;
           feedback.className = 'feedback unanswered';
           wrongItems.push(item);
-          wrongWords.push(correctAnswer);
-        } else if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
-          score += 4;
-          correctCount++;
-          feedback.textContent = '✅ 答對';
-          feedback.className = 'feedback correct';
-        } else {
-          incorrectCount++;
-          feedback.textContent = `❌ 答錯，正確答案為：${correctAnswer}`;
-          feedback.className = 'feedback incorrect';
-          wrongItems.push(item);
-          wrongWords.push(correctAnswer);
+          wrongWords.push(item.word);
+      } else if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+        score += 4;
+        correctCount++;
+        feedback.textContent = '✅ 答對';
+        feedback.className = 'feedback correct';
+      } else {
+        incorrectCount++;
+        feedback.textContent = index >= 30
+          ? `❌ 答錯，正確答案為：${item.zh}（${item.word}）`
+          : `❌ 答錯，正確答案為：${item.word}（${item.zh}）`;
+        feedback.className = 'feedback incorrect';
+        wrongItems.push(item);
+        wrongWords.push(item.word);
         }
       });
 
@@ -243,7 +248,7 @@
         const correct = idx < 10 ? item.word : idx < 20 ? item.word : item.zh;
         div.appendChild(document.createTextNode(`錯題 ${idx + 1}: `));
         div.appendChild(audio);
-        div.appendChild(document.createTextNode(` 正確答案：${correct}`));
+        div.appendChild(document.createTextNode(` 正確答案：${item.zh}（${item.word}）`));
         review.appendChild(div);
       });
       document.getElementById('reviewSection').classList.remove('hidden');
