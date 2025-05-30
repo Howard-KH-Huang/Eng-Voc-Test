@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>English Vocabulary Online Test</title>
+  <title>113-2-English Vocabulary Online Test (Grade 3)</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; }
     .question { margin-bottom: 20px; }
@@ -18,6 +18,18 @@
       display: flex; justify-content: center; align-items: center;
       font-size: 24px; z-index: 9999;
     }
+    .modal {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.8); display: flex;
+      justify-content: center; align-items: center; z-index: 10000;
+    }
+    .modal-content {
+      background-color: white; color: black; padding: 20px;
+      border-radius: 8px; text-align: center; width: 300px;
+    }
+    .modal-content button {
+      margin-top: 15px; padding: 10px 20px;
+    }
     table, th, td { border: 1px solid black; border-collapse: collapse; padding: 5px; }
     th { background-color: #f2f2f2; }
     #userInfo input { margin: 5px 0; }
@@ -26,7 +38,8 @@
   </style>
 </head>
 <body>
-  <h1>English Vocabulary Online Test</h1>
+  <h1>113-2-English Vocabulary Online Test (Grade 3)</h1>
+
   <div id="userInfo">
     <label>Class: <input type="text" id="userClass" required /></label>
     <label>Number: <input type="text" id="userNumber" required /></label>
@@ -35,7 +48,8 @@
   </div>
 
   <div id="quizSection" class="hidden">
-    <p id="timer">Time left: 15:00</p>
+    <p id="timer">Time left: 1:00</p>
+    <p id="progressIndicator">已完成 0 / 25 題</p>
     <form id="quizForm"></form>
     <button id="submitBtn">Submit</button>
     <div id="result" class="hidden"></div>
@@ -45,12 +59,26 @@
       <div id="reviewContent"></div>
     </div>
     <button id="retryBtn">🔁 重新測驗</button>
-  
+  </div>
+
+  <!-- 修正過的 Modal -->
+  <div id="timeoutModal" class="modal hidden">
+    <div class="modal-content">
+      <p>作答時間截止，系統已送出答案!</p>
+      <button onclick="closeTimeoutNotice()">關閉</button>
+    </div>
+  </div>
+
+  <!-- 修正過的 Audio -->
+  <audio id="timeoutAudio">
+    <source src="alarm.mp3" type="audio/mpeg">
+  </audio>
+
   <script>
     const items = [...Array(50)].map((_, i) => ({
       audio: `chunk_${String(i + 1).padStart(2, '0')}.mp3`,
       word: ['pet','pit','jet','net','sit','hit','fix','fox','six','mix','ox','box','bear','monkey','tiger','lion','horse','goat','sing','dance','read','write','draw','can','can\'t','Goodbye.','See you.','I\'m sorry.','That\'s OK.','do','for','them','How about...?','show','have','great','Time to go home.','today','mom','mommy','mother','card','flower','cake','Happy Mother\'s Day.','on','Don\'t worry.','let\'s','here is...','I love you.'][i],
-      zh: ['寵物','坑','噴射機','網子','坐下','打','修理','狐狸','六','混合','公牛','盒子','熊','猴子','老虎','獅子','馬','山羊','唱歌','跳舞','閱讀','寫字','畫畫','可以','不可以','再見','再見','對不起','沒關係','做','給','他們','...如何？','展示','有','很棒','回家時間到了','今天','媽媽','媽咪','母親','卡片','花','蛋糕','母親節快樂','在','別擔心','讓我們','這是...','我愛你'][i]
+      zh: ['寵物','坑','噴射機','網子','坐下','打','修理','狐狸','六','混合','公牛','盒子','熊','猴子','老虎','獅子','馬','山羊','唱歌','跳舞','閱讀','寫字','畫畫','可以','不可以','再見','再見','對不起','沒關係','做','給','他們','...如何？','展示','有','很棒','回家時間到了','今天','媽媽','媽咪','母親','卡片','花','蛋糕','母親節快樂','在','別擔心','讓我們','這是...','我愛你.'][i]
     }));
 
     function shuffle(array) {
@@ -62,7 +90,7 @@
     }
 
     let selectedItems, choiceItems, typingItems, zhItems;
-    let timerStartTime, totalTime = 15 * 60;
+    let timerStartTime, totalTime = 1 * 60;
     let interval;
 
     document.getElementById('startBtn').addEventListener('click', () => {
@@ -89,14 +117,36 @@
         totalTime--;
         if (totalTime < 0) {
           clearInterval(interval);
-          document.getElementById('overlay').classList.remove('hidden');
-          document.getElementById('timeoutSound').play();
-          setTimeout(() => {
-            document.getElementById('submitBtn').click();
-          }, 1500);
+          document.getElementById('submitBtn').click();
+          setTimeout(showTimeoutNotice, 500);
         }
       }, 1000);
     }
+
+    function showTimeoutNotice() {
+      document.getElementById('timeoutModal').classList.remove('hidden');
+      document.getElementById('timeoutAudio').play();
+    }
+
+    function closeTimeoutNotice() {
+      document.getElementById('timeoutModal').classList.add('hidden');
+      document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    
+function updateProgress() {
+      const total = 25;
+      const inputs = document.querySelectorAll("input");
+      const answered = [...Array(total).keys()].filter(index => {
+        const group = document.querySelectorAll(`[name='answer_${index}']`);
+        if (!group.length) return false;
+        if (group[0].type === 'radio') return [...group].some(g => g.checked);
+        return group[0].value.trim() !== '';
+      });
+      document.getElementById("progressIndicator").textContent = `已完成 ${answered.length} / ${total} 題`;
+    }
+
+
 
     function buildQuiz() {
       selectedItems = shuffle([...items]).slice(0, 25);
@@ -130,38 +180,31 @@
         div.appendChild(audio);
         div.appendChild(document.createElement('br'));
 
-        if (index < 10) {
-          const options = shuffle([item.word, ...shuffle(items.filter(i => i.word !== item.word).map(i => i.word)).slice(0, 3)]);
+        if (index < 10 || index >= 20) {
+          const options = shuffle(
+            index < 10
+              ? [item.word, ...shuffle(items.filter(i => i.word !== item.word)).slice(0, 3).map(i => i.word)]
+              : [item.zh, ...shuffle(items.filter(i => i.zh !== item.zh)).slice(0, 3).map(i => i.zh)]
+          );
           options.forEach(option => {
             const label = document.createElement('label');
             const radio = document.createElement('input');
             radio.type = 'radio';
             radio.name = `answer_${index}`;
             radio.value = option;
+            radio.addEventListener('change', updateProgress);
             label.appendChild(radio);
             label.appendChild(document.createTextNode(option));
             div.appendChild(label);
             div.appendChild(document.createElement('br'));
           });
-        } else if (index < 20) {
+        } else {
           const input = document.createElement('input');
           input.type = 'text';
           input.name = `answer_${index}`;
           input.placeholder = 'Type your answer';
+          input.addEventListener('input', updateProgress);
           div.appendChild(input);
-        } else {
-          const options = shuffle([item.zh, ...shuffle(items.filter(i => i.zh !== item.zh).map(i => i.zh)).slice(0, 3)]);
-          options.forEach(option => {
-            const label = document.createElement('label');
-            const radio = document.createElement('input');
-            radio.type = 'radio';
-            radio.name = `answer_${index}`;
-            radio.value = option;
-            label.appendChild(radio);
-            label.appendChild(document.createTextNode(option));
-            div.appendChild(label);
-            div.appendChild(document.createElement('br'));
-          });
         }
 
         const feedback = document.createElement('div');
@@ -170,12 +213,24 @@
         div.appendChild(feedback);
         quizForm.appendChild(div);
       });
+    
+
+      updateProgress();
     }
+
+    function disableAllInputs() {
+      document.querySelectorAll('#quizForm input').forEach(input => {
+        input.disabled = true;
+      });
+    }
+
+
 
     document.getElementById('submitBtn').addEventListener('click', () => {
       document.getElementById('submitBtn').disabled = true; // 防止重複送出
       clearInterval(interval);
       document.getElementById('timer').textContent += '（已提交）';
+
 
       const elapsed = Math.floor((Date.now() - timerStartTime) / 1000);
       const minutes = Math.floor(elapsed / 60);
@@ -274,21 +329,10 @@
     });
 
     document.getElementById('retryBtn').addEventListener('click', () => {
-      document.getElementById('quizForm').innerHTML = '';
-      document.getElementById('result').classList.add('hidden');
-      document.getElementById('scoreTable').innerHTML = '';
-      document.getElementById('reviewContent').innerHTML = '';
-      document.getElementById('reviewSection').classList.add('hidden');
-      document.getElementById('userInfo').classList.remove('hidden');
-      document.getElementById('quizSection').classList.add('hidden');
-      document.getElementById('overlay').classList.add('hidden');
-      document.getElementById('timer').textContent = 'Time left: 15:00';
-      totalTime = 15 * 60;
-      timerStartTime = null;
-      document.getElementById('userClass').value = '';
-      document.getElementById('userNumber').value = '';
-      document.getElementById('userName').value = '';
+      location.reload(); // 簡化：整頁重載即可
     });
+
+
   </script>
 </body>
 </html>
