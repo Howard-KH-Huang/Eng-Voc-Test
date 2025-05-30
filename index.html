@@ -70,9 +70,10 @@
   </div>
 
   <!-- 修正過的 Audio -->
-  <audio id="timeoutAudio">
-    <source src="alarm.mp3" type="audio/mpeg">
-  </audio>
+  <div id="timeoutModal" class="hidden">
+    <p>作答時間已截止，已自動送出答案。</p>
+    <button onclick="closeTimeoutNotice()">關閉</button>
+  </div>
 
   <script>
     const items = [...Array(50)].map((_, i) => ({
