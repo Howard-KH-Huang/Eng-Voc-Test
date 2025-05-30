@@ -48,7 +48,7 @@
   </div>
 
   <div id="quizSection" class="hidden">
-    <p id="timer">Time left: 1:00</p>
+    <p id="timer">Time left: 2:00</p>
     <p id="progressIndicator">已完成 0 / 25 題</p>
     <form id="quizForm"></form>
     <button id="submitBtn">Submit</button>
@@ -59,20 +59,6 @@
       <div id="reviewContent"></div>
     </div>
     <button id="retryBtn">🔁 重新測驗</button>
-  </div>
-
-  <!-- 修正過的 Modal -->
-  <div id="timeoutModal" class="modal hidden">
-    <div class="modal-content">
-      <p>作答時間截止，系統已送出答案!</p>
-      <button onclick="closeTimeoutNotice()">關閉</button>
-    </div>
-  </div>
-
-  <!-- 修正過的 Audio -->
-  <div id="timeoutModal" class="hidden">
-    <p>作答時間已截止，已自動送出答案。</p>
-    <button onclick="closeTimeoutNotice()">關閉</button>
   </div>
 
   <script>
@@ -91,7 +77,7 @@
     }
 
     let selectedItems, choiceItems, typingItems, zhItems;
-    let timerStartTime, totalTime = 1 * 60;
+    let timerStartTime, totalTime = 2 * 60;
     let interval;
 
     document.getElementById('startBtn').addEventListener('click', () => {
@@ -124,6 +110,20 @@
       }, 1000);
     }
 
+  <!-- 修正過的 Modal -->
+  <div id="timeoutModal" class="modal hidden">
+    <div class="modal-content">
+      <p>作答時間截止，系統已送出答案!</p>
+      <button onclick="closeTimeoutNotice()">關閉</button>
+    </div>
+  </div>
+
+  <!-- 修正過的 Audio -->
+  <div id="timeoutModal" class="hidden">
+    <p>作答時間已截止，已自動送出答案。</p>
+    <button onclick="closeTimeoutNotice()">關閉</button>
+  </div>
+    
     function showTimeoutNotice() {
       document.getElementById('timeoutModal').classList.remove('hidden');
       document.getElementById('timeoutAudio').play();
