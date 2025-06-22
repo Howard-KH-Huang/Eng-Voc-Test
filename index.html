@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>113-2-English Vocabulary Online Test (Grade 3)</title>
+  <title>2025 Summer Vacation-English Vocabulary Online Test (Grade 3)</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; }
     .question { margin-bottom: 20px; }
@@ -18,18 +18,6 @@
       display: flex; justify-content: center; align-items: center;
       font-size: 24px; z-index: 9999;
     }
-    .modal {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.8); display: flex;
-      justify-content: center; align-items: center; z-index: 10000;
-    }
-    .modal-content {
-      background-color: white; color: black; padding: 20px;
-      border-radius: 8px; text-align: center; width: 300px;
-    }
-    .modal-content button {
-      margin-top: 15px; padding: 10px 20px;
-    }
     table, th, td { border: 1px solid black; border-collapse: collapse; padding: 5px; }
     th { background-color: #f2f2f2; }
     #userInfo input { margin: 5px 0; }
@@ -38,8 +26,7 @@
   </style>
 </head>
 <body>
-  <h1>113-2-English Vocabulary Online Test (Grade 3)</h1>
-
+  <h1>2025 Summer Vacation-English Vocabulary Online Test (Grade 3)</h1>
   <div id="userInfo">
     <label>Class: <input type="text" id="userClass" required /></label>
     <label>Number: <input type="text" id="userNumber" required /></label>
@@ -47,8 +34,11 @@
     <button id="startBtn">Start Quiz</button>
   </div>
 
-  <div id="quizSection" class="hidden">
-    <p id="timer">Time left: 2:00</p>
+
+
+
+    <div id="quizSection" class="hidden">
+    <p id="timer">Time left: 15:00</p>
     <p id="progressIndicator">已完成 0 / 25 題</p>
     <form id="quizForm"></form>
     <button id="submitBtn">Submit</button>
@@ -61,11 +51,12 @@
     <button id="retryBtn">🔁 重新測驗</button>
   </div>
 
+  
   <script>
-    const items = [...Array(50)].map((_, i) => ({
+    const items = [...Array(164)].map((_, i) => ({
       audio: `chunk_${String(i + 1).padStart(2, '0')}.mp3`,
-      word: ['pet','pit','jet','net','sit','hit','fix','fox','six','mix','ox','box','bear','monkey','tiger','lion','horse','goat','sing','dance','read','write','draw','can','can\'t','Goodbye.','See you.','I\'m sorry.','That\'s OK.','do','for','them','How about...?','show','have','great','Time to go home.','today','mom','mommy','mother','card','flower','cake','Happy Mother\'s Day.','on','Don\'t worry.','let\'s','here is...','I love you.'][i],
-      zh: ['寵物','坑','噴射機','網子','坐下','打','修理','狐狸','六','混合','公牛','盒子','熊','猴子','老虎','獅子','馬','山羊','唱歌','跳舞','閱讀','寫字','畫畫','可以','不可以','再見','再見','對不起','沒關係','做','給','他們','...如何？','展示','有','很棒','回家時間到了','今天','媽媽','媽咪','母親','卡片','花','蛋糕','母親節快樂','在','別擔心','讓我們','這是...','我愛你.'][i]
+      word: ['pet','pit','jet','net','sit','hit','fix','fox','six','mix','ox','box','bear','monkey','tiger','lion','horse','goat','sing','dance','read','write','draw','can','can\'t','Goodbye.','See you.','I\'m sorry.','That\'s OK.','do','for','them','How about...?','show','have','great','Time to go home.','today','mom','mommy','mother','card','flower','cake','Happy Mother\'s Day.','on','Don\'t worry.','let\'s','here is...','I love you.','one','two','three','four','five','ant','bag','cat','dog','egg','fish','girl','hat','insect','jet','kite','hello','hi','we','help','find','name','seven','eight','nine','ten','Happy birthday.', 'Good morning.','Thank you.', 'You\'re welcome.','Nice to meet you.','Come here.','nose','pig ','queen','rabbit','up','vest','window','yo-yo','zebra','strong','thin','short','tall','he','she','tired','angry','happy','sad','yes','no','not',' How are you?','I\'m fine.','Good job.','Try again.','Christmas tree','stocking', 'gift','Santa Claus','Merry Christmas.','Happy New Year.','eleven','tewelve','thirteen','fourteen','fifteen','map','mop','cap','tap','hop','top','bug','rag','mug','hug','eraser',' ruler','pen','marker','pencil','this','that','it','a','red','yellow','blue','green','orange', 'purple','color','I have an idea.','Good idea.','Here you are.','Oh, no.','go out','make','rainbow','need','put into','paper','cup','Guess!','Cool!','Look!','Wow!','raining,'what','tag','I\'m OK.'][i],
+      zh: ['寵物','坑','噴射機','網子','坐下','打','修理','狐狸','六','混合','公牛','盒子','熊','猴子','老虎','獅子','馬','山羊','唱歌','跳舞','閱讀','寫字','畫畫','可以','不可以','再見','再見','對不起','沒關係','做','給','他們','...如何？','展示','有','很棒','回家時間到了','今天','媽媽','媽咪','母親','卡片','花','蛋糕','母親節快樂','在','別擔心','讓我們','這是...','我愛你','一','二','三','四','五','螞蟻','袋子','貓咪','狗','蛋','魚','女孩','帽子','昆蟲','噴射機','風箏','哈囉','嗨','我們','幫忙','找到','名字','七','八','九','十','生日快樂。', '早安。','謝謝你。', '不客氣。','我很高興認識你。','過來這裡。','鼻子','豬 ','女王','兔子','向上','背心','窗戶','溜溜球','斑馬','強壯的','瘦的','矮的','高的','他','她','疲累的','生氣的','快樂的','難過的','是','不','不是','你好嗎?','我很好。','做得好。','再試一次。','聖誕樹','長襪', '禮物',聖誕老人,'聖誕快樂。','新年快樂。','十一','十二','十三','十四','十五','地圖','拖把','帽子','水龍頭','單腳跳','頂端','小昆蟲','抹布','馬克杯','擁抱','橡皮擦','尺','原子筆','彩色筆','鉛筆','這個','那個','它','一個','紅色','黃色','藍色','綠色','橘色', '紫色','顏色','我有個主意。','好主意。','這個給你。','噢，不。','出去','製作','彩虹','需要','放進','紙','杯子','猜猜看！','酷！','你看！','哇！','正在下雨,'什麼','標籤','我還好。'][i]
     }));
 
     function shuffle(array) {
@@ -77,7 +68,7 @@
     }
 
     let selectedItems, choiceItems, typingItems, zhItems;
-    let timerStartTime, totalTime = 2 * 60;
+    let timerStartTime, totalTime = 15 * 60;
     let interval;
 
     document.getElementById('startBtn').addEventListener('click', () => {
@@ -94,6 +85,7 @@
       buildQuiz();
     });
 
+
     function startTimer() {
       timerStartTime = Date.now();
       const timerElement = document.getElementById('timer');
@@ -105,37 +97,12 @@
         if (totalTime < 0) {
           clearInterval(interval);
           document.getElementById('submitBtn').click();
-          setTimeout(showTimeoutNotice, 500);
         }
       }, 1000);
     }
 
-  <!-- 修正過的 Modal -->
-  /*<div id="timeoutModal" class="modal hidden">
-    <div class="modal-content">
-      <p>作答時間截止，系統已送出答案!</p>
-      <button onclick="closeTimeoutNotice()">關閉</button>
-    </div>
-  </div>
 
-  <!-- 修正過的 Audio -->
-  <div id="timeoutModal" class="hidden">
-    <p>作答時間已截止，已自動送出答案。</p>
-    <button onclick="closeTimeoutNotice()">關閉</button>
-  </div>*/
-    
-    function showTimeoutNotice() {
-      document.getElementById('timeoutModal').classList.remove('hidden');
-      document.getElementById('timeoutAudio').play();
-    }
-
-    function closeTimeoutNotice() {
-      document.getElementById('timeoutModal').classList.add('hidden');
-      document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
-    }
-
-    
-function updateProgress() {
+    function updateProgress() {
       const total = 25;
       const inputs = document.querySelectorAll("input");
       const answered = [...Array(total).keys()].filter(index => {
@@ -321,7 +288,7 @@ function updateProgress() {
         wrongWords: wrongWords.join(', ')
       };
 
-      fetch('https://script.google.com/macros/s/AKfycbyJwWjnKEA0-SI2hxFS07R5HwRJB2X4PVx7ZAivYSwJmaDmQGMES_7tR5xT9vCbXgyN/exec', {
+      fetch('https://script.google.com/macros/s/AKfycbx62biBgsZEsWgytVbsZoLrYx4lhBBnO1L5C-FUgax-hoWEmZkqRHI7ItKdJebDdpiNxw/exec', {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
@@ -332,8 +299,6 @@ function updateProgress() {
     document.getElementById('retryBtn').addEventListener('click', () => {
       location.reload(); // 簡化：整頁重載即可
     });
-
-
   </script>
 </body>
 </html>
