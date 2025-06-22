@@ -34,10 +34,7 @@
     <button id="startBtn">Start Quiz</button>
   </div>
 
-
-
-
-    <div id="quizSection" class="hidden">
+  <div id="quizSection" class="hidden">
     <p id="timer">Time left: 15:00</p>
     <p id="progressIndicator">已完成 0 / 25 題</p>
     <form id="quizForm"></form>
@@ -51,12 +48,14 @@
     <button id="retryBtn">🔁 重新測驗</button>
   </div>
 
-  
   <script>
-    const items = [...Array(164)].map((_, i) => ({
+    const words = ['pet','pit','jet','net','sit','hit','fix','fox','six','mix','ox','box','bear','monkey','tiger','lion','horse','goat','sing','dance','read','write','draw','can','can\'t','Goodbye.','See you.','I\'m sorry.','That\'s OK.','do','for','them','How about...?','show','have','great','Time to go home.','today','mom','mommy','mother','card','flower','cake','Happy Mother\'s Day.','on','Don\'t worry.','let\'s','here is...','I love you.','one','two','three','four','five','ant','bag','cat','dog','egg','fish','girl','hat','insect','jet','kite','hello','hi','we','help','find','name','seven','eight','nine','ten','Happy birthday.', 'Good morning.','Thank you.', 'You\'re welcome.','Nice to meet you.','Come here.','nose','pig ','queen','rabbit','up','vest','window','yo-yo','zebra','strong','thin','short','tall','he','she','tired','angry','happy','sad','yes','no','not',' How are you?','I\'m fine.','Good job.','Try again.','Christmas tree','stocking', 'gift','Santa Claus','Merry Christmas.','Happy New Year.','eleven','tewelve','thirteen','fourteen','fifteen','map','mop','cap','tap','hop','top','bug','rag','mug','hug','eraser',' ruler','pen','marker','pencil','this','that','it','a','red','yellow','blue','green','orange', 'purple','color','I have an idea.','Good idea.','Here you are.','Oh, no.','go out','make','rainbow','need','put into','paper','cup','Guess!','Cool!','Look!','Wow!','raining,'what','tag','I\'m OK.'];
+    const zh = ['寵物','坑','噴射機','網子','坐下','打','修理','狐狸','六','混合','公牛','盒子','熊','猴子','老虎','獅子','馬','山羊','唱歌','跳舞','閱讀','寫字','畫畫','可以','不可以','再見','再見','對不起','沒關係','做','給','他們','...如何？','展示','有','很棒','回家時間到了','今天','媽媽','媽咪','母親','卡片','花','蛋糕','母親節快樂','在','別擔心','讓我們','這是...','我愛你','一','二','三','四','五','螞蟻','袋子','貓咪','狗','蛋','魚','女孩','帽子','昆蟲','噴射機','風箏','哈囉','嗨','我們','幫忙','找到','名字','七','八','九','十','生日快樂。', '早安。','謝謝你。', '不客氣。','我很高興認識你。','過來這裡。','鼻子','豬 ','女王','兔子','向上','背心','窗戶','溜溜球','斑馬','強壯的','瘦的','矮的','高的','他','她','疲累的','生氣的','快樂的','難過的','是','不','不是','你好嗎?','我很好。','做得好。','再試一次。','聖誕樹','長襪', '禮物','聖誕老人','聖誕快樂。','新年快樂。','十一','十二','十三','十四','十五','地圖','拖把','帽子','水龍頭','單腳跳','頂端','小昆蟲','抹布','馬克杯','擁抱','橡皮擦','尺','原子筆','彩色筆','鉛筆','這個','那個','它','一個','紅色','黃色','藍色','綠色','橘色', '紫色','顏色','我有個主意。','好主意。','這個給你。','噢，不。','出去','製作','彩虹','需要','放進','紙','杯子','猜猜看！','酷！','你看！','哇！','正在下雨,'什麼','標籤','我還好。'];
+
+    const items = words.map((w, i) => ({
       audio: `chunk_${String(i + 1).padStart(2, '0')}.mp3`,
-      word: ['pet','pit','jet','net','sit','hit','fix','fox','six','mix','ox','box','bear','monkey','tiger','lion','horse','goat','sing','dance','read','write','draw','can','can\'t','Goodbye.','See you.','I\'m sorry.','That\'s OK.','do','for','them','How about...?','show','have','great','Time to go home.','today','mom','mommy','mother','card','flower','cake','Happy Mother\'s Day.','on','Don\'t worry.','let\'s','here is...','I love you.','one','two','three','four','five','ant','bag','cat','dog','egg','fish','girl','hat','insect','jet','kite','hello','hi','we','help','find','name','seven','eight','nine','ten','Happy birthday.', 'Good morning.','Thank you.', 'You\'re welcome.','Nice to meet you.','Come here.','nose','pig ','queen','rabbit','up','vest','window','yo-yo','zebra','strong','thin','short','tall','he','she','tired','angry','happy','sad','yes','no','not',' How are you?','I\'m fine.','Good job.','Try again.','Christmas tree','stocking', 'gift','Santa Claus','Merry Christmas.','Happy New Year.','eleven','tewelve','thirteen','fourteen','fifteen','map','mop','cap','tap','hop','top','bug','rag','mug','hug','eraser',' ruler','pen','marker','pencil','this','that','it','a','red','yellow','blue','green','orange', 'purple','color','I have an idea.','Good idea.','Here you are.','Oh, no.','go out','make','rainbow','need','put into','paper','cup','Guess!','Cool!','Look!','Wow!','raining,'what','tag','I\'m OK.'][i],
-      zh: ['寵物','坑','噴射機','網子','坐下','打','修理','狐狸','六','混合','公牛','盒子','熊','猴子','老虎','獅子','馬','山羊','唱歌','跳舞','閱讀','寫字','畫畫','可以','不可以','再見','再見','對不起','沒關係','做','給','他們','...如何？','展示','有','很棒','回家時間到了','今天','媽媽','媽咪','母親','卡片','花','蛋糕','母親節快樂','在','別擔心','讓我們','這是...','我愛你','一','二','三','四','五','螞蟻','袋子','貓咪','狗','蛋','魚','女孩','帽子','昆蟲','噴射機','風箏','哈囉','嗨','我們','幫忙','找到','名字','七','八','九','十','生日快樂。', '早安。','謝謝你。', '不客氣。','我很高興認識你。','過來這裡。','鼻子','豬 ','女王','兔子','向上','背心','窗戶','溜溜球','斑馬','強壯的','瘦的','矮的','高的','他','她','疲累的','生氣的','快樂的','難過的','是','不','不是','你好嗎?','我很好。','做得好。','再試一次。','聖誕樹','長襪', '禮物','聖誕老人','聖誕快樂。','新年快樂。','十一','十二','十三','十四','十五','地圖','拖把','帽子','水龍頭','單腳跳','頂端','小昆蟲','抹布','馬克杯','擁抱','橡皮擦','尺','原子筆','彩色筆','鉛筆','這個','那個','它','一個','紅色','黃色','藍色','綠色','橘色', '紫色','顏色','我有個主意。','好主意。','這個給你。','噢，不。','出去','製作','彩虹','需要','放進','紙','杯子','猜猜看！','酷！','你看！','哇！','正在下雨,'什麼','標籤','我還好。'][i]
+      word: w,
+      zh: zh[i]
     }));
 
     function shuffle(array) {
@@ -85,7 +84,6 @@
       buildQuiz();
     });
 
-
     function startTimer() {
       timerStartTime = Date.now();
       const timerElement = document.getElementById('timer');
@@ -101,10 +99,8 @@
       }, 1000);
     }
 
-
     function updateProgress() {
       const total = 25;
-      const inputs = document.querySelectorAll("input");
       const answered = [...Array(total).keys()].filter(index => {
         const group = document.querySelectorAll(`[name='answer_${index}']`);
         if (!group.length) return false;
@@ -113,8 +109,6 @@
       });
       document.getElementById("progressIndicator").textContent = `已完成 ${answered.length} / ${total} 題`;
     }
-
-
 
     function buildQuiz() {
       selectedItems = shuffle([...items]).slice(0, 25);
@@ -132,15 +126,14 @@
         const audio = document.createElement('audio');
         audio.src = item.audio;
         audio.controls = true;
-        audio.dataset.playCount = 0;
+        let playCount = 0;
         audio.addEventListener('play', () => {
-          const count = parseInt(audio.dataset.playCount);
-          if (count >= 2) {
+          if (playCount >= 2) {
             audio.pause();
             audio.currentTime = 0;
             alert('此題音檔已播放兩次，無法再播放。');
           } else {
-            audio.dataset.playCount = count + 1;
+            playCount++;
           }
         });
 
@@ -181,24 +174,14 @@
         div.appendChild(feedback);
         quizForm.appendChild(div);
       });
-    
 
       updateProgress();
     }
 
-    function disableAllInputs() {
-      document.querySelectorAll('#quizForm input').forEach(input => {
-        input.disabled = true;
-      });
-    }
-
-
-
     document.getElementById('submitBtn').addEventListener('click', () => {
-      document.getElementById('submitBtn').disabled = true; // 防止重複送出
+      document.getElementById('submitBtn').disabled = true;
       clearInterval(interval);
       document.getElementById('timer').textContent += '（已提交）';
-
 
       const elapsed = Math.floor((Date.now() - timerStartTime) / 1000);
       const minutes = Math.floor(elapsed / 60);
@@ -220,30 +203,25 @@
         }
 
         const feedback = document.getElementById(`feedback_${index}`);
-        const correctAnswer = index < 20 ? item.word : (index >= 30 ? item.word : item.zh);
-        
+        let correctAnswer = (index < 20) ? item.word : item.zh;
 
         if (!userAnswer) {
           unansweredCount++;
-          feedback.textContent = index >= 30
-            ? `? 未作答，正確答案為：${item.zh}（${item.word}）`
-            : `? 未作答，正確答案為：${item.word}（${item.zh}）`;
+          feedback.textContent = `? 未作答，正確答案為：${item.word}（${item.zh}）`;
           feedback.className = 'feedback unanswered';
           wrongItems.push(item);
           wrongWords.push(item.word);
-      } else if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
-        score += 4;
-        correctCount++;
-        feedback.textContent = '✅ 答對';
-        feedback.className = 'feedback correct';
-      } else {
-        incorrectCount++;
-        feedback.textContent = index >= 30
-          ? `❌ 答錯，正確答案為：${item.zh}（${item.word}）`
-          : `❌ 答錯，正確答案為：${item.word}（${item.zh}）`;
-        feedback.className = 'feedback incorrect';
-        wrongItems.push(item);
-        wrongWords.push(item.word);
+        } else if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+          score += 4;
+          correctCount++;
+          feedback.textContent = '✅ 答對';
+          feedback.className = 'feedback correct';
+        } else {
+          incorrectCount++;
+          feedback.textContent = `❌ 答錯，正確答案為：${item.word}（${item.zh}）`;
+          feedback.className = 'feedback incorrect';
+          wrongItems.push(item);
+          wrongWords.push(item.word);
         }
       });
 
@@ -268,7 +246,6 @@
         const audio = document.createElement('audio');
         audio.src = item.audio;
         audio.controls = true;
-        const correct = idx < 10 ? item.word : idx < 20 ? item.word : item.zh;
         div.appendChild(document.createTextNode(`錯題 ${idx + 1}: `));
         div.appendChild(audio);
         div.appendChild(document.createTextNode(` 正確答案：${item.zh}（${item.word}）`));
@@ -297,7 +274,7 @@
     });
 
     document.getElementById('retryBtn').addEventListener('click', () => {
-      location.reload(); // 簡化：整頁重載即可
+      location.reload();
     });
   </script>
 </body>
